@@ -1,0 +1,42 @@
+Binding for Xylon logiI2S RX/TX instance configurable I2S controller IP core
+
+Required properties:
+ - compatible: "xylon,logii2s-1.00.a"
+ - reg: MMIO base address and size of the logiI2S IP core address space
+ - interrupts-parent: the phandle for interrupt controller
+ - interrupts: the interrupt number
+ - core-clock-frequency: logiI2S internal core clock frequency
+
+ - instance_N : logiI2S RX/TX instance where N is instance ID in range 0 - 7
+   - i2s-clock-frequency: logiI2S RX/TX instance bit clock frequency
+      If an instance is configured to be a clock master, the bit clock is output
+      and it is derived from the core clock by using a prescale register.
+      If an instance is configured to be a word select master, the word select
+      length is determined by this clock frequency and required sampling rate.
+   - fifo-size: logiI2S RX/TX instance FIFO depth in 32-bit PCM samples
+   - almost-full-level: logiI2S RX/TX instance FIFO almost full level in
+      32-bit PCM samples
+   - almost-empty-level: logiI2S RX/TX instance FIFO almost empty level in
+      32-bit PCM samples
+
+Example:
+
+	logii2s0: logii2s@40080000 {
+		compatible = "xylon,logii2s-2.00.a";
+		reg = <0x40080000 0x1000>;
+		interrupt-parent = <&intc>;
+		interrupts = <0 31 4>;
+		core-clock-frequency = <100000000>;
+		instance_0 {
+			i2s-clock-frequency = <12500000>;
+			fifo-size = <512>;
+			almost-full-level = <170>;
+			almost-empty-level = <85>;
+		};
+		instance_1 {
+			i2s-clock-frequency = <12500000>;
+			fifo-size = <512>;
+			almost-full-level = <170>;
+			almost-empty-level = <85>;
+		};
+	};

@@ -1,0 +1,6 @@
+config SND_XYLON_I2S
+	tristate "Xylon logiI2S driver"
+	select SND_PCM
+	default n
+	help
+	  Support for Xylon logiI2S sound driver.
